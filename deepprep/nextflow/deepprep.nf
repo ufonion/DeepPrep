@@ -49,7 +49,8 @@ process anat_create_summary {
 
     label "maxForks_10"
     cpus 1
-    memory '100 MB'
+    // memory '100 MB'
+    memory '2 GB'
 
     input:
     val(bids_dir)
@@ -83,7 +84,8 @@ process anat_create_subject_orig_dir {
 
     label "maxForks_10"
     cpus 1
-    memory '100 MB'
+    // memory '100 MB'
+    memory '1 GB'
 
     input:  // https://www.nextflow.io/docs/latest/process.html#inputs
     val(subjects_dir)
@@ -187,8 +189,8 @@ process anat_segment {
     tag "${subject_id}"
 
     label "with_gpu"
-    cpus 4
-    memory '7 GB'
+    cpus 10
+    memory '12 GB'
 
     input:
     val(subjects_dir)
@@ -442,7 +444,8 @@ process subject_id_hemi_lh {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     tuple(val(subject_id), val(aseg_presurf_mgz))
@@ -457,7 +460,8 @@ process subject_id_hemi_rh {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     tuple(val(subject_id), val(aseg_presurf_mgz))
@@ -472,7 +476,8 @@ process split_hemi_orig_mgz {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     each hemi
@@ -488,7 +493,8 @@ process split_hemi_rawavg_mgz {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     each hemi
@@ -504,7 +510,8 @@ process split_hemi_brainmask_mgz {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     each hemi
@@ -520,7 +527,8 @@ process split_hemi_aseg_presurf_mgz {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     each hemi
@@ -536,7 +544,8 @@ process split_hemi_brain_finalsurfs_mgz {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     each hemi
@@ -552,7 +561,8 @@ process split_hemi_wm_mgz {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     each hemi
@@ -568,7 +578,8 @@ process split_hemi_filled_mgz {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     each hemi
@@ -1106,7 +1117,8 @@ process lh_anat_ribbon_inputs {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     tuple(val(subject_id), val(aseg_presurf_mgz))
@@ -1121,7 +1133,8 @@ process rh_anat_ribbon_inputs {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     tuple(val(subject_id), val(aseg_presurf_mgz))
@@ -1362,7 +1375,8 @@ process bold_fieldmap {
     tag "${subject_id}"
 
     cpus 1
-    memory '500 MB'
+    // memory '500 MB'
+    memory '4 GB'
 
     input:
     val(bids_dir)
@@ -1490,7 +1504,8 @@ process bold_create_summary {
 
     label "maxForks_10"
     cpus 1
-    memory '100 MB'
+    // memory '100 MB'
+    memory '1 GB'
 
     input:
     val(bids_dir)
@@ -1526,7 +1541,8 @@ process bold_merge_subject_id {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     tuple(val(subjects_id), val(t1_mgz))
@@ -1544,7 +1560,8 @@ process bold_T1_to_2mm {
     tag "${subject_id}"
 
     cpus 1
-    memory '100 MB'
+    // memory '100 MB'
+    memory '1 GB'
 
     input:
     val(subjects_dir)
@@ -1596,7 +1613,8 @@ process split_subject_boldref_file {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     val(bold_id)
@@ -1702,7 +1720,8 @@ process bold_add_subject_id_to_bold_file {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     each val(bold_file_txt)
@@ -1721,7 +1740,8 @@ process split_bold_bbregister_from_anat_input {
     tag "${subject_id}"
 
     cpus 1
-    memory '20 MB'
+    // memory '20 MB'
+    memory '1 GB'
 
     input:
     each val(bold_file_txt)
@@ -2156,7 +2176,7 @@ process bold_confounds_part1 {
     tag "${bold_id}"
 
     cpus 4
-    memory '5 GB'
+    memory '8 GB'
 
     input:
     val(bids_dir)
@@ -2187,7 +2207,7 @@ process bold_confounds_part2 {
     tag "${subject_id}"
 
     cpus 3
-    memory '5 GB'
+    memory '8 GB'
 
     input:
     val(bids_dir)

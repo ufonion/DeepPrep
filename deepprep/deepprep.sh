@@ -24,6 +24,9 @@ deepprep-docker [bids_dir] [output_dir] [{participant}] [--bold_task_type '[task
                 [--device { {auto 0 1 2...} cpu}]
                 [--cpus 10] [--memory 20]
                 [--ignore_error] [--resume]
+                [--eci_role aliyun_eci_role]
+                [--eci_specs aliyun_eci_specs]
+                [--pvc k8s_pvc]
 "
 
 if [ $# -le 1 ]; then
@@ -96,6 +99,21 @@ while [[ $# -gt 0 ]]; do
     --ignore_error)
       ignore_error="True"
       echo "Input --ignore_error : ${ignore_error}"
+      ;;
+    --eci_role)
+      eci_role="$2"
+      echo "Input --eci_role : ${eci_role}"
+      shift
+      ;;
+    --eci_specs)
+      eci_specs="$2"
+      echo "Input --eci_specs : ${eci_specs}"
+      shift
+      ;;
+    --pvc)
+      pvc="$2"
+      echo "Input --pvc : ${pvc}"
+      shift
       ;;
     --resume)
       resume="True"
@@ -214,6 +232,24 @@ else
         exit 1
     fi
   fi
+
+  if [ "${executor}" = "k8s" ]; then
+    if [ -z "${pvc}" ]; then
+      echo "ERROR: No Input --pvc : ${pvc}"
+      exit 1
+    fi
+
+    if [ -z "${eci_role}" ]; then
+      eci_role="dummy-role"
+      echo "WARN: No Input --eci_role : ${eci_role}"
+    fi
+
+    if [ -z "${eci_specs}" ]; then
+      eci_specs=""
+      echo "WARN: No Input --eci_specs : ${eci_specs}"
+    fi
+  fi
+
   if [ -z "${subjects_dir}" ]; then
     subjects_dir="${output_dir}/Recon"
   fi
@@ -228,6 +264,9 @@ else
   sed -i "s@\${bids_dir}@${bids_dir}@g" "${run_config}"
   sed -i "s@\${output_dir}@${output_dir}@g" "${run_config}"
   sed -i "s@\${subjects_dir}@${subjects_dir}@g" "${run_config}"
+  sed -i "s@\${pvc}@${pvc}@g" "${run_config}"
+  sed -i "s@\${eci_role}@${eci_role}@g" "${run_config}"
+  sed -i "s@\${eci_specs}@${eci_specs}@g" "${run_config}"
 fi
 
 cd "${nextflow_work_dir}" && \
